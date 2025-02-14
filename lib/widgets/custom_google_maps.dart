@@ -14,12 +14,17 @@ class _CustomGoogleMapsState extends State<CustomGoogleMaps> {
   late GoogleMapController googleMapController;
   Set<Marker> markers = {};
   Set<Polyline> polylines = {};
+  Set<Polygon> polygons = {};
+  Set<Circle> circles = {};
   @override
   void initState() {
     initialCameraPosition = const CameraPosition(
         zoom: 10, target: LatLng(31.41821293734006, 31.812018125655563));
     initMarkers();
     initPolylines();
+
+    initCircles();
+    initPolygons();
     super.initState();
   }
 
@@ -35,6 +40,8 @@ class _CustomGoogleMapsState extends State<CustomGoogleMaps> {
       children: [
         GoogleMap(
             polylines: polylines,
+            polygons: polygons,
+            circles: circles,
             zoomControlsEnabled: false,
             markers: markers,
             onMapCreated: (controller) {
@@ -104,17 +111,41 @@ class _CustomGoogleMapsState extends State<CustomGoogleMaps> {
         color: Colors.blue,
         startCap: Cap.roundCap,
         width: 3);
-    Polyline polyline3 = const Polyline(
-        patterns: [PatternItem.dot],
-        polylineId: PolylineId("1"),
-        points: [
-          LatLng(31.216006309265, 31.3613031634633),
-          LatLng(31.03377238068991, 31.360398814781718),
-        ],
-        color: Colors.green,
-        startCap: Cap.roundCap,
-        width: 3);
+    // Polyline polyline3 = const Polyline(
+    //     patterns: [PatternItem.dot],
+    //     polylineId: PolylineId("1"),
+    //     points: [
+    //       LatLng(31.216006309265, 31.3613031634633),
+    //       LatLng(31.03377238068991, 31.360398814781718),
+    //     ],
+    //     color: Colors.green,
+    //     startCap: Cap.roundCap,
+    //     width: 3);
 
-    polylines.addAll({polyline1, polyline2, polyline3});
+    polylines.addAll({polyline1, polyline2});
+  }
+
+  void initPolygons() {
+    Polygon polygon = Polygon(
+      strokeWidth: 3,
+      polygonId: const PolygonId("1"),
+      points: const [
+        LatLng(31.507978410010615, 31.821824577938735),
+        LatLng(31.216006309265, 31.3613031634633),
+        LatLng(31.03377238068991, 31.360398814781718),
+      ],
+      fillColor: Colors.blue.shade200,
+    );
+    polygons.add(polygon);
+  }
+
+  void initCircles() {
+    Circle circle = const Circle(
+        strokeColor: Colors.transparent,
+        circleId: CircleId("=1"),
+        fillColor: Colors.blue,
+        center: LatLng(30.969171947407307, 31.167115928341243),
+        radius: 10000);
+    circles.add(circle);
   }
 }

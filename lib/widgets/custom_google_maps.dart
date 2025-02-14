@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps/models/places_model.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class CustomGoogleMaps extends StatefulWidget {
@@ -37,12 +38,12 @@ class _CustomGoogleMapsState extends State<CustomGoogleMaps> {
               googleMapController = controller;
               initMapStyle();
             },
-            cameraTargetBounds: CameraTargetBounds(
-              LatLngBounds(
-                southwest: const LatLng(31.1, 31.5),
-                northeast: const LatLng(31.6, 32.0),
-              ),
-            ),
+            // cameraTargetBounds: CameraTargetBounds(
+            //   LatLngBounds(
+            //     southwest: const LatLng(31.1, 31.5),
+            //     northeast: const LatLng(31.6, 32.0),
+            //   ),
+            // ),
             initialCameraPosition: initialCameraPosition),
         Positioned(
           bottom: 10,
@@ -67,13 +68,12 @@ class _CustomGoogleMapsState extends State<CustomGoogleMaps> {
   }
 
   void initMarkers() {
-    var myMarker = const Marker(
-        markerId: MarkerId("1"),
-        position: LatLng(31.41821293734006, 31.812018125655563));
-    var newmarker = const Marker(
-        markerId: MarkerId("2"),
-        position: LatLng(31.216006309265, 31.3613031634633));
-
-    markers.addAll({myMarker, newmarker});
+    var myPlaces = places
+        .map((place) => Marker(
+            markerId: MarkerId(place.id),
+            position: place.latlng,
+            infoWindow: InfoWindow(title: place.name)))
+        .toSet();
+    markers.addAll(myPlaces);
   }
 }

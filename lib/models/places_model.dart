@@ -10,15 +10,19 @@ class PlacesModel {
 List<PlacesModel> places = [
   PlacesModel(
     id: "1",
-    name: "cairo",
-    latlng: const LatLng(30.052925299427674, 31.309967210270326),
+    name: "Ras Elbar",
+    latlng: const LatLng(31.507978410010615, 31.821824577938735),
   ),
   PlacesModel(
       id: "2",
-      name: "Alex",
-      latlng: const LatLng(31.20217014771493, 29.9162285903348)),
+      name: "Mansoura",
+      latlng: const LatLng(31.03377238068991, 31.360398814781718)),
   PlacesModel(
       id: "3",
       name: "Domiatt",
-      latlng: const LatLng(31.43546357822963, 31.673213343895053))
+      latlng: const LatLng(31.41821293734006, 31.812018125655563)),
+  PlacesModel(
+      id: "4",
+      name: "Belqas",
+      latlng: const LatLng(31.216006309265, 31.3613031634633))
 ];

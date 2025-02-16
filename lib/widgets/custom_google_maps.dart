@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps/models/places_model.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
 
 class CustomGoogleMaps extends StatefulWidget {
   const CustomGoogleMaps({super.key});
@@ -12,6 +13,7 @@ class CustomGoogleMaps extends StatefulWidget {
 class _CustomGoogleMapsState extends State<CustomGoogleMaps> {
   late CameraPosition initialCameraPosition;
   late GoogleMapController googleMapController;
+  late Location location;
   Set<Marker> markers = {};
   Set<Polyline> polylines = {};
   Set<Polygon> polygons = {};
@@ -25,6 +27,8 @@ class _CustomGoogleMapsState extends State<CustomGoogleMaps> {
 
     initCircles();
     initPolygons();
+    location = Location();
+    checkLocationService();
     super.initState();
   }
 
@@ -147,5 +151,15 @@ class _CustomGoogleMapsState extends State<CustomGoogleMaps> {
         center: LatLng(30.969171947407307, 31.167115928341243),
         radius: 10000);
     circles.add(circle);
+  }
+
+  void checkLocationService() async {
+    var isServiceEnabled = await location.serviceEnabled();
+    if (isServiceEnabled == false) {
+      isServiceEnabled = await location.requestService();
+      if (isServiceEnabled == false) {
+        //show snackBar
+      }
+    }
   }
 }

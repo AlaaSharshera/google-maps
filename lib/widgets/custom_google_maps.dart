@@ -29,6 +29,7 @@ class _CustomGoogleMapsState extends State<CustomGoogleMaps> {
     initPolygons();
     location = Location();
     checkLocationService();
+    checkLocaionPermission();
     super.initState();
   }
 
@@ -158,6 +159,16 @@ class _CustomGoogleMapsState extends State<CustomGoogleMaps> {
     if (isServiceEnabled == false) {
       isServiceEnabled = await location.requestService();
       if (isServiceEnabled == false) {
+        //show snackBar
+      }
+    }
+  }
+
+  void checkLocaionPermission() async {
+    var permissionStatus = await location.hasPermission();
+    if (permissionStatus == PermissionStatus.denied) {
+      permissionStatus = await location.requestPermission();
+      if (permissionStatus != PermissionStatus.granted) {
         //show snackBar
       }
     }
